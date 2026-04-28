@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager</title>
+    <style>
+        :root {
+            --bg-1: #f3f6fb;
+            --bg-2: #e8eef9;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #d9e2ef;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success: #15803d;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            background: radial-gradient(circle at top, var(--bg-1), var(--bg-2));
+            color: var(--text);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            width: min(900px, 100%);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+            padding: 28px;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin: 28px 0 16px;
+        }
+
+        .task-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .search-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto 10px;
+            width: fit-content;
+            flex-wrap: wrap;
+        }
+
+        .search-form input {
+            min-width: 260px;
+        }
+
+        input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        button {
+            border: 0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #fff;
+            background: var(--primary);
+            transition: background 0.15s ease-in-out;
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 12px;
+        }
+
+        li {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+            background: #fbfdff;
+        }
+
+        .task-status {
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .task-status.incomplete {
+            color: var(--muted);
+        }
+
+        .complete-btn {
+            background: var(--success);
+        }
+
+        .complete-btn:hover {
+            background: #72bc8e;
+        }
+
+        .delete-btn {
+            background: var(--danger);
+        }
+
+        .delete-btn:hover {
+            background: #b91c1c;
+        }
+
+        .empty {
+            text-align: center;
+            color: var(--muted);
+            margin: 6px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>Task Manager</h1>
+
+        <form class="task-form" action="/add" method="post">
+            <input name="title" placeholder="Title" required>
+            <input name="priority" placeholder="Priority: LOW | MED | HIGH" required>
+            <input name="due" placeholder="Due Date" required>
+            <button type="submit">Add Task</button>
+        </form>
+
+        <h2>Tasks</h2>
+
+        <form class="search-form" action ="/" method="get">
+            <input name="query" value="{{ query }}" placeholder="Search Task">
+            <button type="submit">Search</button>
+        </form>
+
+        {% if tasks %}
+            <ul>
+                {% for task in tasks %}
+                    <li>
+                        <strong>{{ task.id }}</strong>
+                        <span>{{ task.title }}</span>
+                        <span>{{ task.priority }}</span>
+                        <span>{{ task.due }}</span>
+
+                        {% if task.status %}
+                            <span class="task-status">Complete</span>
+                        {% else %}
+                            <span class="task-status incomplete">Incomplete</span>
+                        {% endif %}
+                        {% if not task.status %}
+                        <form action="/complete/{{ task.id }}" method="post">
+                            <button class="complete-btn" type="submit">Complete</button>
+                        </form>
+                        {% endif %}
+
+                        <form action="/delete/{{ task.id }}" method="post">
+                            <button class="delete-btn" type="submit">Delete</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty">No tasks found.</p>
+        {% endif %}
+    </main>
+
+</body>
+</html>
