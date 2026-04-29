@@ -10,8 +10,12 @@
         <h2>Edit Task</h2>
         <form class="edit-form" action="/edit/{{ task.id }}" method="post">
             <input name="title" value="{{ task.title }}" placeholder="Title">
-            <input name="priority" value="{{ task.priority }}" placeholder="Priority">
-            <input name="due" value="{{ task.due }}" placeholder="Due Date">
+            <select name="priority">
+                <option value="Low" {{ "selected" if task.priority == "Low" else "" }}>Low</option>
+                <option value="Med" {{ "selected" if task.priority == "Med" else "" }}>Med</option>
+                <option value="High" {{ "selected" if task.priority == "High" else "" }}>High</option>
+            </select>
+            <input type="date" name="due" value="{{ task.due }}" placeholder="Due Date">
             <div class="actions">
                 <button type="submit">Save</button>
             </div>

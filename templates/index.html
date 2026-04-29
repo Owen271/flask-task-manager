@@ -10,8 +10,12 @@
 
         <form class="task-form" action="/add" method="post">
             <input name="title" placeholder="Title" required>
-            <input name="priority" placeholder="Priority: LOW | MED | HIGH" required>
-            <input name="due" placeholder="Due Date" required>
+            <select name="priority">
+                <option value="Low">Low</option>
+                <option value="Med">Med</option>
+                <option value="High">High</option>
+            </select>
+            <input type="date" name="due" required>
             <button type="submit">Add Task</button>
         </form>
 

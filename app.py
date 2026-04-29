@@ -22,7 +22,7 @@ def home():
 @app.route("/add", methods=["POST"])
 def add():
     title = request.form["title"].upper()
-    priority = request.form["priority"].upper()
+    priority = request.form["priority"]
     due = request.form["due"]
 
     manager.add_task(title, priority, due)
@@ -46,17 +46,20 @@ def delete(task_id):
         
 @app.route("/edit/<int:task_id>")
 def edit_page(task_id):
-    task = manager.tasks[task_id]
+    task = manager.tasks.get(task_id)
     output = render_template("edit.html", task=task)
+    if not task:
+        return redirect("/")
 
     return output
 
 @app.route("/edit/<int:task_id>", methods=["POST"])
 def edit(task_id):
     title = request.form["title"].upper()
-    priority = request.form["priority"].upper()
+    priority = request.form["priority"]
     due = request.form["due"]
     manager.edit_task(task_id, title, priority, due)
+    manager.savecsv()
 
     return redirect("/")
 
