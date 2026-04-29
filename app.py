@@ -7,7 +7,7 @@ app = Flask(__name__)
 manager = TaskManager()
 manager.loadcsv()
 
-@app.route("/", methods=["GET"])
+@app.route("/")
 def home():
     query = request.args.get("query","")
     if query:
@@ -44,6 +44,21 @@ def delete(task_id):
 
     return redirect("/")
         
+@app.route("/edit/<int:task_id>")
+def edit_page(task_id):
+    task = manager.tasks[task_id]
+    output = render_template("edit.html", task=task)
+
+    return output
+
+@app.route("/edit/<int:task_id>", methods=["POST"])
+def edit(task_id):
+    title = request.form["title"].upper()
+    priority = request.form["priority"].upper()
+    due = request.form["due"]
+    manager.edit_task(task_id, title, priority, due)
+
+    return redirect("/")
 
 
 if __name__ == "__main__":

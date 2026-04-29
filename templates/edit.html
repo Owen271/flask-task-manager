@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <h1>Task Manager</h1>
+        <h2>Edit Task</h2>
+        <form class="edit-form" action="/edit/{{ task.id }}" method="post">
+            <input name="title" value="{{ task.title }}" placeholder="Title">
+            <input name="priority" value="{{ task.priority }}" placeholder="Priority">
+            <input name="due" value="{{ task.due }}" placeholder="Due Date">
+            <div class="actions">
+                <button type="submit">Save</button>
+            </div>
+        </form>
+        <a class="button-link" href="/">Cancel</a>
+    </main>
+</body>
+</html>

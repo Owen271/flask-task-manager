@@ -45,6 +45,12 @@ class TaskManager:
             if query.strip().lower() in task.title.strip().lower():
                 yield(task)
 
+    def edit_task(self, id: int, title: str, priority: str, due: str):
+        self.tasks[id].title = title
+        self.tasks[id].priority = priority
+        self.tasks[id].due = due
+
+
     def loadcsv(self):
         try:
             with open("task1.csv", 'r', newline = '', encoding = 'utf-8') as f:
