@@ -58,6 +58,26 @@ h2 {
     margin-bottom: 6px;
 }
 
+.field-group {
+    display: grid;
+    gap: 6px;
+}
+
+.field-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    padding-left: 2px;
+}
+
+.field-label-empty {
+    visibility: hidden;
+}
+
+.button-group button {
+    width: 100%;
+}
+
 .search-form {
     display: flex;
     justify-content: center;
@@ -138,6 +158,15 @@ li {
     gap: 8px;
     text-align: center;
     background: #fbfdff;
+}
+
+.task-meta {
+    white-space: nowrap;
+}
+
+.task-separator {
+    color: var(--muted);
+    user-select: none;
 }
 
 .task-status {

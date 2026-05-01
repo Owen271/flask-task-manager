@@ -9,14 +9,26 @@
         <h1>Task Manager</h1>
 
         <form class="task-form" action="/add" method="post">
-            <input name="title" placeholder="Title" required>
-            <select name="priority">
-                <option value="Low">Low</option>
-                <option value="Med">Med</option>
-                <option value="High">High</option>
-            </select>
-            <input type="date" name="due" required>
-            <button type="submit">Add Task</button>
+            <label class="field-group">
+                <span class="field-label">Title</span>
+                <input name="title" placeholder="Title" required>
+            </label>
+            <label class="field-group">
+                <span class="field-label">Priority</span>
+                <select name="priority">
+                    <option value="Low">Low</option>
+                    <option value="Med">Med</option>
+                    <option value="High">High</option>
+                </select>
+            </label>
+            <label class="field-group">
+                <span class="field-label">Date</span>
+                <input type="date" name="due" required>
+            </label>
+            <div class="field-group button-group">
+                <span class="field-label field-label-empty" aria-hidden="true">&nbsp;</span>
+                <button type="submit">Add Task</button>
+            </div>
         </form>
 
         <h2>Tasks</h2>
@@ -30,10 +42,11 @@
             <ul>
                 {% for task in tasks %}
                     <li>
-                        <strong>{{ task.id }}</strong>
-                        <span>{{ task.title }}</span>
-                        <span>{{ task.priority }}</span>
-                        <span>{{ task.due }}</span>
+                        <span class="task-meta">{{ task.title }}</span>
+                        <span class="task-separator" aria-hidden="true">|</span>
+                        <span class="task-meta">{{ task.priority }}</span>
+                        <span class="task-separator" aria-hidden="true">|</span>
+                        <span class="task-meta">{{ task.due }}</span>
 
                         {% if task.status %}
                             <span class="task-status">Complete</span>

@@ -9,13 +9,28 @@
         <h1>Task Manager</h1>
         <h2>Edit Task</h2>
         <form class="edit-form" action="/edit/{{ task.id }}" method="post">
-            <input name="title" value="{{ task.title }}" placeholder="Title">
-            <select name="priority">
-                <option value="Low" {{ "selected" if task.priority == "Low" else "" }}>Low</option>
-                <option value="Med" {{ "selected" if task.priority == "Med" else "" }}>Med</option>
-                <option value="High" {{ "selected" if task.priority == "High" else "" }}>High</option>
-            </select>
-            <input type="date" name="due" value="{{ task.due }}" placeholder="Due Date">
+            <label class="field-group">
+                <span class="field-label">Title</span>
+                <input name="title" value="{{ task.title }}" placeholder="Title" required>
+            </label>
+            <label class="field-group">
+                <span class="field-label">Priority</span>
+                <select name="priority">
+                    <option value="Low" {{ "selected" if task.priority == "Low" else "" }}>Low</option>
+                    <option value="Med" {{ "selected" if task.priority == "Med" else "" }}>Med</option>
+                    <option value="High" {{ "selected" if task.priority == "High" else "" }}>High</option>
+                </select>
+            </label>
+            <label class="field-group">
+                <span class="field-label">Date</span>
+                <input type="date" name="due" value="{{ task.due }}" required>
+            </label>
+            {% if task.status %}
+            <label>
+                <span class="field-label">Complete</span>
+                <input type="checkbox" name="status" checked>
+            </label>
+            {% endif %}
             <div class="actions">
                 <button type="submit">Save</button>
             </div>

@@ -47,18 +47,19 @@ def delete(task_id):
 @app.route("/edit/<int:task_id>")
 def edit_page(task_id):
     task = manager.tasks.get(task_id)
-    output = render_template("edit.html", task=task)
+
     if not task:
         return redirect("/")
 
-    return output
+    return render_template("edit.html", task=task)
 
 @app.route("/edit/<int:task_id>", methods=["POST"])
 def edit(task_id):
     title = request.form["title"].upper()
     priority = request.form["priority"]
     due = request.form["due"]
-    manager.edit_task(task_id, title, priority, due)
+    status = "status" in request.form
+    manager.edit_task(task_id, title, priority, due, status)
     manager.savecsv()
 
     return redirect("/")

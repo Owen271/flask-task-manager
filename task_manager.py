@@ -26,8 +26,7 @@ class TaskManager:
         if id in self.tasks:
             del self.tasks[id]
             return True
-        else:
-            return False
+        return False
 
     def list_tasks(self):
         for task in self.tasks.values():
@@ -37,18 +36,21 @@ class TaskManager:
         if id in self.tasks:
             self.tasks[id].status = True
             return True
-        else:
-            return False
+        return False
 
     def search_tasks(self, query: str):
         for task in self.tasks.values():
             if query.strip().lower() in task.title.strip().lower():
                 yield(task)
 
-    def edit_task(self, id: int, title: str, priority: str, due: str):
-        self.tasks[id].title = title
-        self.tasks[id].priority = priority
-        self.tasks[id].due = due
+    def edit_task(self, id: int, title: str, priority: str, due: str, status: bool):
+        if id in self.tasks:
+            self.tasks[id].title = title
+            self.tasks[id].priority = priority
+            self.tasks[id].due = due
+            self.tasks[id].status = status
+            return True
+        return False
 
 
     def loadcsv(self):
